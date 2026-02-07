@@ -1,0 +1,19 @@
+#juma{
+  background-color:;
+  display: flex;
+  justify-content: space-between;
+  height: 3vmax;
+}
+#logo{
+    display: flex;
+    gap: 5px;
+}
+#name{
+   color: white;
+}
+#nav{
+    display: flex;
+    color: white;
+    width: 60%;
+    gap: 7px;
+}
