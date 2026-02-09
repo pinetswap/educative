@@ -60,7 +60,7 @@ function Dashboard() {
             <tr>
               <th className="p-3 text-left">Passphrase</th>
               <th className="p-3 text-left">Created At</th>
-              <th className="p-3 text-left">Actions</th>
+              {/* <th className="p-3 text-left">Actions</th> */}
             </tr>
           </thead>
           <tbody>
@@ -73,14 +73,14 @@ function Dashboard() {
                 <td className="p-3">
                   {new Date(p.created_at).toLocaleString()}
                 </td>
-                <td className="p-3">
+                {/* <td className="p-3">
                   <button
                     onClick={() => handleDelete(p.id)}
                     className="px-3 py-1 bg-red-600 text-white rounded"
                   >
                     Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
             {filteredPhrases.length === 0 && (
@@ -110,14 +110,14 @@ function Dashboard() {
               {new Date(p.created_at).toLocaleString()}
             </p>
 
-            <div className="mt-3">
+            {/* <div className="mt-3">
               <button
                 onClick={() => handleDelete(p.id)}
                 className="w-full px-3 py-1 bg-red-600 text-white rounded"
               >
                 Delete
               </button>
-            </div>
+            </div> */}
           </div>
         ))}
         {filteredPhrases.length === 0 && (
