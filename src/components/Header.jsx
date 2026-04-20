@@ -7,7 +7,6 @@ const Header = () => {
     const location = useLocation()
     const [center,setCenter] = useState(false)
     useEffect(()=>{
-        console.log(location.pathname)
         if(location.pathname == "/unlock"){
             setCenter(true)
         } else {

