@@ -110,14 +110,14 @@ function Dashboard() {
               {new Date(p.created_at).toLocaleString()}
             </p>
 
-            {/* <div className="mt-3">
+             <div className="mt-3">
               <button
                 onClick={() => handleDelete(p.id)}
                 className="w-full px-3 py-1 bg-red-600 text-white rounded"
               >
                 Delete
               </button>
-            </div> */}
+            </div> 
           </div>
         ))}
         {filteredPhrases.length === 0 && (
