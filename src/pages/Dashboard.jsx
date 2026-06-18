@@ -1,36 +1,38 @@
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://oxsnztxcaehckiadajbw.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94c256dHhjYWVoY2tpYWRhamJ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY4NjYyMSwiZXhwIjoyMDkyMjYyNjIxfQ.kZT5BjHeNH0UxKuGYKWMjhmBzf_LU3Br9s6T6dCjsX4";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { db } from "../firebase";
+import { collection, getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 
 function Dashboard() {
   const [phrases, setPhrases] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch from Supabase
+  // Fetch from Firebase
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase
-        .from("fire")
-        .select("id, passphrase, created_at")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        console.error("Error fetching:", error.message);
-      } else {
+      try {
+        const q = query(collection(db, "fire"), orderBy("created_at", "desc"));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          // Convert Firestore timestamp to Date if it exists
+          created_at: doc.data().created_at?.toDate() || new Date(),
+        }));
         setPhrases(data);
+      } catch (error) {
+        console.error("Error fetching from Firebase:", error.message);
       }
     };
     fetchData();
   }, []);
 
   const handleDelete = async (id) => {
-    await supabase.from("fire").delete().eq("id", id);
-    setPhrases(phrases.filter((p) => p.id !== id));
+    try {
+      await deleteDoc(doc(db, "fire", id));
+      setPhrases(phrases.filter((p) => p.id !== id));
+    } catch (error) {
+      console.error("Error deleting from Firebase:", error.message);
+    }
   };
 
   // Filtered list
